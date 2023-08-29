@@ -1,0 +1,8 @@
+{
+  "name": "liars-dice-common",
+  "version": "0.0.1",
+  "description": "Common resources for Liar's Dice applications",
+  "author": "Alcus",
+  "license": "ISC",
+  "scripts": {}
+}

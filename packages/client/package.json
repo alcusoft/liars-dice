@@ -1,0 +1,8 @@
+{
+  "name": "liars-dice-client",
+  "version": "0.0.1",
+  "description": "A Liar's Dice client",
+  "author": "Alcus",
+  "license": "ISC",
+  "scripts": {}
+}

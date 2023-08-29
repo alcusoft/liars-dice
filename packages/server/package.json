@@ -1,0 +1,8 @@
+{
+  "name": "liars-dice-server",
+  "version": "0.0.1",
+  "description": "A Liar's Dice server",
+  "author": "Alcus",
+  "license": "ISC",
+  "scripts": {}
+}

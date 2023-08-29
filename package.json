@@ -1,0 +1,13 @@
+{
+  "name": "liars-dice",
+  "version": "0.0.1",
+  "description": "A dice game about deception",
+  "author": "Alcus",
+  "license": "ISC",
+  "scripts": {},
+  "workspaces": [
+    "packages/client",
+    "packages/server",
+    "packages/common"
+  ]
+}
