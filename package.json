@@ -13,6 +13,7 @@
     "install:client": "npm install --workspace=packages/client",
     "install:common": "npm install --workspace=packages/common",
     "install:server": "npm install --workspace=packages/server",
+    "lint": "npm run lint:client && npm run lint:common && npm run lint:server",
     "lint:client": "npm run lint --workspace=packages/client",
     "lint:common": "npm run lint --workspace=packages/common",
     "lint:server": "npm run lint --workspace=packages/server",
