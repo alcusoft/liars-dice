@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:jest/recommended",
+    "plugin:jsdoc/recommended-typescript"
+  ],
+  "plugins": ["jest", "jsdoc"],
+  "rules": {
+    "max-len": ["warn", 80, 2],
+    "no-unused-vars": "warn"
+  }
+}
