@@ -8,10 +8,14 @@
     "lint": "eslint",
     "test": "jest"
   },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
   "devDependencies": {
+    "@types/jest": "^29.5.4",
+    "@types/lodash": "^4.14.197",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@typescript-eslint/parser": "^6.5.0",
-    "@types/jest": "^29.5.4",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
     "eslint-plugin-jest": "^27.2.3",
