@@ -1,6 +1,7 @@
 {
   "extends": [
     "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:jest/recommended",
     "plugin:jsdoc/recommended-typescript",
@@ -9,7 +10,6 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint", "jest", "jsdoc"],
   "rules": {
-    "max-len": ["warn", 80, 2],
-    "no-unused-vars": "warn"
+    "max-len": ["warn", 80, 2]
   }
 }
