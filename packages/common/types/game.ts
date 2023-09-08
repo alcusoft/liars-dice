@@ -1,6 +1,7 @@
 export type Die = {
   id: string;
   value: 1 | 2 | 3 | 4 | 5 | 6;
+  isVisible: boolean;
 };
 
 export type Player = {
@@ -24,22 +25,19 @@ export type GameConfig = {
   allowRerolling: boolean;
   allowSpotOnCalls: boolean;
   showNumDice: boolean;
-  turnTimeLimit: number | null;
+  turnTimeLimit: number | undefined;
   hideLogsDuringRound: boolean;
   countOnesAsWild: boolean;
+  numDicePerPlayer: number;
 };
 
-export type GameStatus = "AWAITING_BID" | "ROUND_OVER" | "GAME_OVER";
-
-export type LobbyState = {
-  gameId: GameId;
-  hostPlayerId: Player["id"];
-  players: Player[];
-  gameConfig: GameConfig;
-};
+export type GameStatus =
+  | "IN_LOBBY"
+  | "AWAITING_BID"
+  | "ROUND_OVER"
+  | "GAME_OVER";
 
 export type GameState = {
-  gameId: GameId;
   gameConfig: GameConfig;
   gameStatus: GameStatus;
   hostPlayerId: Player["id"];
@@ -47,6 +45,8 @@ export type GameState = {
   previousBids: Bid[];
   playerMap: Record<Player["id"], Player>;
   biddingQueue: Player["id"][];
+  timerStartTime: number | undefined;
+  activeCall: Call | undefined;
 };
 
 export const GameConfigPresetMap = {
@@ -54,16 +54,18 @@ export const GameConfigPresetMap = {
     allowRerolling: false,
     allowSpotOnCalls: true,
     showNumDice: true,
-    turnTimeLimit: null,
+    turnTimeLimit: undefined,
     hideLogsDuringRound: true,
     countOnesAsWild: false,
+    numDicePerPlayer: 5,
   },
   advanced: {
     allowRerolling: true,
     allowSpotOnCalls: true,
     showNumDice: true,
-    turnTimeLimit: null,
+    turnTimeLimit: undefined,
     hideLogsDuringRound: true,
     countOnesAsWild: false,
+    numDicePerPlayer: 5,
   },
 } as const satisfies Record<string, GameConfig>;

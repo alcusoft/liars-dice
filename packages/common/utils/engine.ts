@@ -1,53 +1,30 @@
 import _ from "lodash";
 import { getElement } from "./arrays";
 import {
+  GameConfigPresetMap,
   type Bid,
   type Call,
   type Die,
-  GameConfigPresetMap,
   type GameState,
-  type LobbyState,
   type Player,
-  type GameId,
 } from "../types/game";
 
 /**
- * Gets the initial lobby state for game with a specified ID and host player.
- * @param gameId The ID of the game.
- * @param hostPlayer The host player of the game.
- * @returns The initial lobby state.
- */
-export const getInitialLobbyState = (
-  gameId: GameId,
-  hostPlayer: Player,
-): LobbyState => ({
-  gameId,
-  hostPlayerId: hostPlayer.id,
-  players: [hostPlayer],
-  gameConfig: GameConfigPresetMap["classic"],
-});
-
-/**
- * Generates the initial game from the final lobby state.
- * @param lobbyState The final lobby state.
+ * Generates the initial state for a game with a specified host player.
+ * @param hostPlayer The host player.
  * @returns The initial game state.
  */
-export const getInitialGameState = (lobbyState: LobbyState): GameState => {
-  const activePlayer = _.first(lobbyState.players);
-
-  if (activePlayer === undefined) {
-    throw new Error("Attempted to create a game with no players");
-  }
-
+export const getInitialGameState = (hostPlayer: Player): GameState => {
   return {
-    gameId: lobbyState.gameId,
-    gameConfig: lobbyState.gameConfig,
-    gameStatus: "AWAITING_BID",
-    hostPlayerId: lobbyState.hostPlayerId,
-    activePlayerId: activePlayer.id,
+    gameConfig: GameConfigPresetMap.classic,
+    gameStatus: "IN_LOBBY",
+    hostPlayerId: hostPlayer.id,
+    activePlayerId: hostPlayer.id,
     previousBids: [],
-    playerMap: _.keyBy(lobbyState.players, ({ id }) => id),
-    biddingQueue: lobbyState.players.map(({ id }) => id),
+    playerMap: { [hostPlayer.id]: hostPlayer },
+    biddingQueue: [hostPlayer.id],
+    activeCall: undefined,
+    timerStartTime: undefined,
   };
 };
 
