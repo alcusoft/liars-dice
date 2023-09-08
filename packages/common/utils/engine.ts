@@ -93,26 +93,26 @@ const getNumDiceWithValue = (gameState: GameState, value: Die["value"]) => {
 };
 
 /**
- * Determines if a specified call is correct against the previous bid.
+ * Determines if a specified call is correct against the active bid.
  * @param gameState The current game state.
  * @param call The call to to check for correctness.
  * @returns `true` if the call is correct, `false` otherwise.
  */
 export const isCallCorrect = (gameState: GameState, call: Call) => {
-  const previousBid = _.last(gameState.previousBids);
+  const activeBid = getActiveBid(gameState);
 
   // Calls can only be made after a bid was made on the first turn
-  if (previousBid === undefined) {
+  if (activeBid === undefined) {
     throw new Error("Illegal call made on the first turn");
   }
 
-  const numDiceWithBidValue = getNumDiceWithValue(gameState, previousBid.value);
+  const numDiceWithBidValue = getNumDiceWithValue(gameState, activeBid.value);
 
-  if (call === "CHALLENGE_BID" && numDiceWithBidValue >= previousBid.value) {
+  if (call === "CHALLENGE_BID" && numDiceWithBidValue >= activeBid.value) {
     return true;
   }
 
-  if (call === "SPOT_ON" && numDiceWithBidValue === previousBid.value) {
+  if (call === "SPOT_ON" && numDiceWithBidValue === activeBid.value) {
     return true;
   }
 
@@ -120,7 +120,7 @@ export const isCallCorrect = (gameState: GameState, call: Call) => {
 };
 
 /**
- * Determines if a next bid is valid based on the previous bid.
+ * Determines if a next bid is valid based on the active bid.
  *  @param gameState The current game state.
  * @param nextBid The next bid to be evaluated for validity.
  * @returns `true` if the next bid is valid, `false` otherwise.
@@ -136,24 +136,24 @@ export const isValidNextBid = (gameState: GameState, nextBid: Bid) => {
     return false;
   }
 
-  const previousBid = _.last(gameState.previousBids);
+  const activeBid = getActiveBid(gameState);
 
   // If this is the first bid, all bids are valid
-  if (previousBid === undefined) {
+  if (activeBid === undefined) {
     return true;
   }
 
-  // If the quantity of dice is raised from the previous bid, all die values are
+  // If the quantity of dice is raised from the active bid, all die values are
   // valid for the next bid
-  if (nextBid.quantity > previousBid.quantity) {
+  if (nextBid.quantity > activeBid.quantity) {
     return true;
   }
 
   // If the quantity of dice of the next bid is the same as the quantity of dice
-  // of the previous bid, only higher die values are valid for the next bid
+  // of the active bid, only higher die values are valid for the next bid
   if (
-    nextBid.quantity === previousBid.quantity &&
-    nextBid.value > previousBid.value
+    nextBid.quantity === activeBid.quantity &&
+    nextBid.value > activeBid.value
   ) {
     return true;
   }
@@ -180,3 +180,12 @@ export const isGameOver = (gameState: GameState) => {
 
   return numPlayersWithNoDice === numPlayers - 1;
 };
+/**
+ * Gets the latest bid made by a player.
+ * @param gameState The current state of the game.
+ * @returns The latest bid or `undefined` if no bids have been made.
+ */
+const getActiveBid = (gameState: GameState) => {
+  return _.last(gameState.previousBids);
+};
+
