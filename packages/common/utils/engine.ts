@@ -157,6 +157,16 @@ export const isGameOver = (gameState: GameState) => {
 
   return numPlayersWithNoDice === numPlayers - 1;
 };
+
+/**
+ * Rolls a specified die
+ * @param die The die to roll
+ */
+export const rollDie = (die: Die) => {
+  const newValue = _.random(1, 6) as Die["value"];
+  die.value = newValue;
+};
+
 /**
  * Gets the latest bid made by a player.
  * @param gameState The current state of the game.
