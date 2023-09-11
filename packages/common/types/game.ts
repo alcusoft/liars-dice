@@ -17,7 +17,15 @@ export type Bid = {
   value: Die["value"];
 };
 
-export type Call = "CHALLENGE_BID" | "SPOT_ON";
+export type Call = {
+  type: "CHALLENGE_BID" | "SPOT_ON";
+  playerId: Player["id"];
+  isCorrect: boolean;
+  effect: {
+    playerId: Player["id"];
+    numDiceDelta: 0 | 1 | -1;
+  };
+};
 
 export type GameId = string;
 
