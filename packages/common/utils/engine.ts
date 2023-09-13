@@ -85,11 +85,11 @@ export const isCallCorrect = (gameState: GameState, call: Call) => {
 
   const numDiceWithBidValue = getNumDiceWithValue(gameState, activeBid.value);
 
-  if (call === "CHALLENGE_BID" && numDiceWithBidValue >= activeBid.value) {
+  if (call.type === "CHALLENGE_BID" && numDiceWithBidValue >= activeBid.value) {
     return true;
   }
 
-  if (call === "SPOT_ON" && numDiceWithBidValue === activeBid.value) {
+  if (call.type === "SPOT_ON" && numDiceWithBidValue === activeBid.value) {
     return true;
   }
 
@@ -144,18 +144,7 @@ export const isValidNextBid = (gameState: GameState, nextBid: Bid) => {
  * @returns `true` if the game is over, `false` otherwise.
  */
 export const isGameOver = (gameState: GameState) => {
-  const numPlayers = Object.keys(gameState.playerMap).length;
-
-  const numPlayersWithNoDice = _.chain(gameState.playerMap)
-    .values()
-    .sumBy((player) => (player.dice.length === 0 ? 1 : 0))
-    .value();
-
-  if (numPlayersWithNoDice === numPlayers) {
-    throw new Error("Invalid number of players with no dice");
-  }
-
-  return numPlayersWithNoDice === numPlayers - 1;
+  return gameState.biddingQueue.length === 1;
 };
 
 /**
