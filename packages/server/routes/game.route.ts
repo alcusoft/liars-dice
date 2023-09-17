@@ -45,6 +45,11 @@ const router = Router({
     throw new Error("Not implemented");
   }),
 
+  /** Updates the order players will place bids. */
+  updatePlayerOrder: Procedure.mutation(() => {
+    throw new Error("Not implemented");
+  }),
+
   /** Updates the game config by the host player. */
   updateConfig: Procedure.mutation(() => {
     throw new Error("Not implemented");
