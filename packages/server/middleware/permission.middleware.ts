@@ -1,8 +1,9 @@
-import { RequestHandler } from "express";
+import { Middleware } from "../apps/trpc.app";
 
-const middleware: RequestHandler = (req, res, next) => {
+/** Checks whether the requester has permission to execute the procedure. */
+const middleware = Middleware((opts) => {
   console.error("Not implemented");
-  next();
-};
+  return opts.next();
+});
 
 export default middleware;
