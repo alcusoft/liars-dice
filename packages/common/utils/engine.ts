@@ -72,10 +72,10 @@ const getNumDiceWithValue = (gameState: GameState, value: Die["value"]) => {
 /**
  * Determines if a specified call is correct against the active bid.
  * @param gameState The current game state.
- * @param call The call to to check for correctness.
+ * @param callType The type of call to check for correctness.
  * @returns `true` if the call is correct, `false` otherwise.
  */
-export const isCallCorrect = (gameState: GameState, call: Call) => {
+export const isCallCorrect = (gameState: GameState, callType: Call["type"]) => {
   const activeBid = getActiveBid(gameState);
 
   // Calls can only be made after a bid was made on the first turn
@@ -85,11 +85,11 @@ export const isCallCorrect = (gameState: GameState, call: Call) => {
 
   const numDiceWithBidValue = getNumDiceWithValue(gameState, activeBid.value);
 
-  if (call === "CHALLENGE_BID" && numDiceWithBidValue >= activeBid.value) {
+  if (callType === "CHALLENGE_BID" && numDiceWithBidValue >= activeBid.value) {
     return true;
   }
 
-  if (call === "SPOT_ON" && numDiceWithBidValue === activeBid.value) {
+  if (callType === "SPOT_ON" && numDiceWithBidValue === activeBid.value) {
     return true;
   }
 
