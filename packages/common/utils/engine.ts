@@ -29,6 +29,20 @@ export const getInitialGameState = (hostPlayer: Player): GameState => {
 };
 
 /**
+ * Creates a player.
+ * @param name The name of the player.
+ * @returns The new player.
+ */
+export const createPlayer = (name: Player["name"]): Player => {
+  return {
+    id: "123",
+    name,
+    emoji: "", // TODO: Set a random emoji
+    dice: [],
+  };
+};
+
+/**
  * Determines the active player for the next turn.
  * @param gameState The current game state.
  * @returns The active player for the next turn.
@@ -175,4 +189,3 @@ export const rollDie = (die: Die) => {
 const getActiveBid = (gameState: GameState) => {
   return _.last(gameState.previousBids);
 };
-
