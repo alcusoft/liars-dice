@@ -1,5 +1,4 @@
 import _ from "lodash";
-import { getElement } from "./arrays";
 import {
   GameConfigPresetMap,
   type Bid,
@@ -40,30 +39,6 @@ export const createPlayer = (name: Player["name"]): Player => {
     emoji: "", // TODO: Set a random emoji
     dice: [],
   };
-};
-
-/**
- * Determines the active player for the next turn.
- * @param gameState The current game state.
- * @returns The active player for the next turn.
- */
-export const getNextActivePlayer = (gameState: GameState) => {
-  const { activePlayerId, biddingQueue, playerMap } = gameState;
-  const activePlayerOrder = biddingQueue.indexOf(activePlayerId);
-
-  if (activePlayerOrder === -1) {
-    throw new Error("Active player not referenced in bidding queue");
-  }
-
-  // FIXME: Does not account for players with no dice
-  const nextActivePlayerId = getElement(biddingQueue, activePlayerOrder + 1);
-
-  if (nextActivePlayerId === undefined) {
-    throw new Error("Game state contains empty bidding queue");
-  }
-
-  const nextActivePlayer = playerMap[nextActivePlayerId];
-  return nextActivePlayer;
 };
 
 /**
