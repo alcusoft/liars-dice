@@ -1,4 +1,4 @@
-import _ from "lodash";
+import _, { last } from "lodash";
 import { getElement } from "./arrays";
 import {
   GameConfigPresetMap,
@@ -75,7 +75,7 @@ const getNumDiceWithValue = (gameState: GameState, value: Die["value"]) => {
  * @param call The call to to check for correctness.
  * @returns `true` if the call is correct, `false` otherwise.
  */
-export const isCallCorrect = (gameState: GameState, call: Call) => {
+export const isCallCorrect = (gameState: GameState, callType: Call["type"]) => {
   const activeBid = getActiveBid(gameState);
 
   // Calls can only be made after a bid was made on the first turn
@@ -85,11 +85,13 @@ export const isCallCorrect = (gameState: GameState, call: Call) => {
 
   const numDiceWithBidValue = getNumDiceWithValue(gameState, activeBid.value);
 
-  if (call.type === "CHALLENGE_BID" && numDiceWithBidValue >= activeBid.value) {
+  // If the actual number of dice with the bid value is greater than or equal to the
+  // bid quantity, then the bidder wins and the call is incorrect.
+  if (callType === "CHALLENGE_BID" && numDiceWithBidValue < activeBid.quantity) {
     return true;
   }
 
-  if (call.type === "SPOT_ON" && numDiceWithBidValue === activeBid.value) {
+  if (callType === "SPOT_ON" && numDiceWithBidValue === activeBid.quantity) {
     return true;
   }
 
@@ -144,6 +146,10 @@ export const isValidNextBid = (gameState: GameState, nextBid: Bid) => {
  * @returns `true` if the game is over, `false` otherwise.
  */
 export const isGameOver = (gameState: GameState) => {
+  if (gameState.biddingQueue.length === 0) {
+    throw new Error("No players are in the bidding queue.");
+  }
+
   return gameState.biddingQueue.length === 1;
 };
 
@@ -165,3 +171,51 @@ const getActiveBid = (gameState: GameState) => {
   return _.last(gameState.previousBids);
 };
 
+/**
+ * Computes the effect of a call, and updates it within the GameState.
+ * Doesn't kick out losers or adjust the number of dice. 
+ * @param gameState 
+ * @param callType 
+ * @returns modified gameState
+ */
+export const applyCallToGameState = (gameState: GameState, callType: Call["type"]) => {
+  const currentPlayer = gameState.activePlayerId;
+  const lastPlayer = _.last(gameState.biddingQueue)
+
+  //TODO: Remove unnecessary error checks after server code is fleshed out.
+  if (gameState.activeCall !== undefined) {
+    throw new Error("A call is already in action.")
+  }
+
+  if (gameState.gameStatus !== "AWAITING_BID" || gameState.biddingQueue.length < 2) {
+    throw new Error("No round is in play.  A call cannot be made until the round starts.")
+  }
+
+  if (lastPlayer === undefined) {
+    throw new Error("lastPlayer is undefined.  Bidding queue is empty.")
+  }
+
+  const callIsCorrect = isCallCorrect(gameState, callType);
+
+  let effect: Call["effect"];
+  if (callType === "CHALLENGE_BID") {
+    effect = {
+      playerId: callIsCorrect ? String(lastPlayer) : currentPlayer,
+      numDiceDelta: -1,
+    }
+  } else {
+    effect = {
+      playerId: currentPlayer,
+      numDiceDelta: callIsCorrect ? 1 : -1,
+    }
+  }
+
+  gameState.gameStatus = "ROUND_OVER";
+  gameState.activeCall = {
+    type: callType,
+    isCorrect: callIsCorrect,
+    playerId: currentPlayer,
+    effect: effect,
+  }
+  return gameState;
+}
