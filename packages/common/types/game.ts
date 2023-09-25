@@ -20,7 +20,7 @@ export type Bid = {
 export type Call = {
   type: "CHALLENGE_BID" | "SPOT_ON";
   playerId: Player["id"];
-  isCorrect: boolean | undefined;
+  isCorrect: boolean;
   effect: {
     playerId: Player["id"];
     numDiceDelta: 0 | 1 | -1;
