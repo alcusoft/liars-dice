@@ -1,8 +1,9 @@
-import { RequestHandler } from "express";
+import { Middleware } from "../apps/trpc.app";
 
-const middleware: RequestHandler = (req, res, next) => {
+/** Validates the requester's auth token and extracts their player ID. */
+const middleware = Middleware((opts) => {
   console.error("Not implemented");
-  next();
-};
+  return opts.next();
+});
 
 export default middleware;

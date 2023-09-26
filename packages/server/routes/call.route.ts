@@ -1,8 +1,10 @@
-import { Router } from "express";
-import CallController from "../controllers/call.controller";
+import { Procedure, Router } from "../apps/trpc.app";
 
-const router = Router();
-
-router.post("/create", CallController.Create);
+const router = Router({
+  /** Creates a new call by the active player against the latest bid. */
+  create: Procedure.mutation(() => {
+    throw new Error("Not implemented");
+  }),
+});
 
 export default router;

@@ -1,8 +1,10 @@
-import { Router } from "express";
-import BidController from "../controllers/bid.controller";
+import { Procedure, Router } from "../apps/trpc.app";
 
-const router = Router();
-
-router.post("/create", BidController.Create);
+const router = Router({
+  /* Creates a new bid by the active player. */
+  create: Procedure?.mutation(() => {
+    throw new Error("Not implemented");
+  }),
+});
 
 export default router;

@@ -29,27 +29,17 @@ export const getInitialGameState = (hostPlayer: Player): GameState => {
 };
 
 /**
- * Determines the active player for the next turn.
- * @param gameState The current game state.
- * @returns The active player for the next turn.
+ * Creates a player.
+ * @param name The name of the player.
+ * @returns The new player.
  */
-export const getNextActivePlayer = (gameState: GameState) => {
-  const { activePlayerId, biddingQueue, playerMap } = gameState;
-  const activePlayerOrder = biddingQueue.indexOf(activePlayerId);
-
-  if (activePlayerOrder === -1) {
-    throw new Error("Active player not referenced in bidding queue");
-  }
-
-  // FIXME: Does not account for players with no dice
-  const nextActivePlayerId = getElement(biddingQueue, activePlayerOrder + 1);
-
-  if (nextActivePlayerId === undefined) {
-    throw new Error("Game state contains empty bidding queue");
-  }
-
-  const nextActivePlayer = playerMap[nextActivePlayerId];
-  return nextActivePlayer;
+export const createPlayer = (name: Player["name"]): Player => {
+  return {
+    id: "123",
+    name,
+    emoji: "", // TODO: Set a random emoji
+    dice: [],
+  };
 };
 
 /**
@@ -72,7 +62,7 @@ const getNumDiceWithValue = (gameState: GameState, value: Die["value"]) => {
 /**
  * Determines if a specified call is correct against the active bid.
  * @param gameState The current game state.
- * @param call The call to to check for correctness.
+ * @param callType The type of call to check for correctness.
  * @returns `true` if the call is correct, `false` otherwise.
  */
 export const isCallCorrect = (gameState: GameState, callType: Call["type"]) => {
@@ -92,6 +82,7 @@ export const isCallCorrect = (gameState: GameState, callType: Call["type"]) => {
   }
 
   if (callType === "SPOT_ON" && numDiceWithBidValue === activeBid.quantity) {
+
     return true;
   }
 
