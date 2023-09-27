@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { Call, Die, GameConfigPresetMap, GameState } from "../types/game";
+import { Die, GameConfigPresetMap, GameState } from "../types/game";
 import { applyCallToGameState, isGameOver, rollDie } from "./engine";
 
 describe("rollDie", () => {
@@ -50,7 +50,7 @@ describe("Basic GameState update operations", () => {
       biddingQueue: ["b", "a"],
       gameStatus: "AWAITING_BID",
       playerMap: {
-        "a": {
+        a: {
           id: "a",
           emoji: "emoji",
           name: "a",
@@ -60,7 +60,7 @@ describe("Basic GameState update operations", () => {
             { id: "a3", isVisible: false, value: 1 },
           ],
         },
-        "b": {
+        b: {
           id: "b",
           emoji: "emoji",
           name: "b",
@@ -71,14 +71,15 @@ describe("Basic GameState update operations", () => {
           ],
         },
       },
-      previousBids: [
-        { playerId: "a", value: 2, quantity: 6 }
-      ],
+      previousBids: [{ playerId: "a", value: 2, quantity: 6 }],
       activeCall: undefined,
       timerStartTime: undefined,
     };
 
-    const newGameState: GameState = applyCallToGameState(currentState, "CHALLENGE_BID");
+    const newGameState: GameState = applyCallToGameState(
+      currentState,
+      "CHALLENGE_BID",
+    );
     expect(newGameState.gameStatus).toBe("ROUND_OVER");
     expect(newGameState.activeCall?.isCorrect).toBe(true);
     expect(newGameState.activeCall?.effect?.playerId).toBe("a");
@@ -93,7 +94,7 @@ describe("Basic GameState update operations", () => {
       biddingQueue: ["b", "a"],
       gameStatus: "AWAITING_BID",
       playerMap: {
-        "a": {
+        a: {
           id: "a",
           emoji: "emoji",
           name: "a",
@@ -103,7 +104,7 @@ describe("Basic GameState update operations", () => {
             { id: "a3", isVisible: false, value: 1 },
           ],
         },
-        "b": {
+        b: {
           id: "b",
           emoji: "emoji",
           name: "b",
@@ -114,14 +115,15 @@ describe("Basic GameState update operations", () => {
           ],
         },
       },
-      previousBids: [
-        { playerId: "a", value: 1, quantity: 3 }
-      ],
+      previousBids: [{ playerId: "a", value: 1, quantity: 3 }],
       activeCall: undefined,
       timerStartTime: undefined,
     };
 
-    const newGameState: GameState = applyCallToGameState(currentState, "CHALLENGE_BID");
+    const newGameState: GameState = applyCallToGameState(
+      currentState,
+      "CHALLENGE_BID",
+    );
     expect(newGameState.gameStatus).toBe("ROUND_OVER");
     expect(newGameState.activeCall?.isCorrect).toBe(false);
     expect(newGameState.activeCall?.effect?.playerId).toBe("b");
@@ -136,7 +138,7 @@ describe("Basic GameState update operations", () => {
       biddingQueue: ["b", "a"],
       gameStatus: "AWAITING_BID",
       playerMap: {
-        "a": {
+        a: {
           id: "a",
           emoji: "emoji",
           name: "a",
@@ -146,7 +148,7 @@ describe("Basic GameState update operations", () => {
             { id: "a3", isVisible: false, value: 1 },
           ],
         },
-        "b": {
+        b: {
           id: "b",
           emoji: "emoji",
           name: "b",
@@ -156,14 +158,15 @@ describe("Basic GameState update operations", () => {
           ],
         },
       },
-      previousBids: [
-        { playerId: "a", value: 1, quantity: 4 }
-      ],
+      previousBids: [{ playerId: "a", value: 1, quantity: 4 }],
       activeCall: undefined,
       timerStartTime: undefined,
     };
 
-    const newGameState: GameState = applyCallToGameState(currentState, "SPOT_ON");
+    const newGameState: GameState = applyCallToGameState(
+      currentState,
+      "SPOT_ON",
+    );
     expect(newGameState.gameStatus).toBe("ROUND_OVER");
     expect(newGameState.activeCall?.isCorrect).toBe(true);
     expect(newGameState.activeCall?.effect?.playerId).toBe("b");
@@ -178,7 +181,7 @@ describe("Basic GameState update operations", () => {
       biddingQueue: ["b", "a"],
       gameStatus: "AWAITING_BID",
       playerMap: {
-        "a": {
+        a: {
           id: "a",
           emoji: "emoji",
           name: "a",
@@ -188,7 +191,7 @@ describe("Basic GameState update operations", () => {
             { id: "a3", isVisible: false, value: 1 },
           ],
         },
-        "b": {
+        b: {
           id: "b",
           emoji: "emoji",
           name: "b",
@@ -199,14 +202,15 @@ describe("Basic GameState update operations", () => {
           ],
         },
       },
-      previousBids: [
-        { playerId: "a", value: 2, quantity: 6 }
-      ],
+      previousBids: [{ playerId: "a", value: 2, quantity: 6 }],
       activeCall: undefined,
       timerStartTime: undefined,
     };
 
-    const newGameState: GameState = applyCallToGameState(currentState, "SPOT_ON");
+    const newGameState: GameState = applyCallToGameState(
+      currentState,
+      "SPOT_ON",
+    );
     expect(newGameState.gameStatus).toBe("ROUND_OVER");
     expect(newGameState.activeCall?.isCorrect).toBe(false);
     expect(newGameState.activeCall?.effect?.playerId).toBe("b");
