@@ -200,7 +200,7 @@ export const applyCallToGameState = (
   let effect: Call["effect"];
   if (callType === "CHALLENGE_BID") {
     effect = {
-      playerId: callIsCorrect ? String(lastPlayer) : currentPlayer,
+      playerId: callIsCorrect ? lastPlayer : currentPlayer,
       numDiceDelta: -1,
     };
   } else {
