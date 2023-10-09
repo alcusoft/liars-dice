@@ -3,6 +3,7 @@ import { createPlayer, getInitialGameState } from "../../common/utils/engine";
 import { Procedure, Router } from "../apps/trpc.app";
 import { setGameState } from "../stores/game.store";
 import { signAuthToken } from "../utils/auth.utils";
+import { createGameId } from "../utils/crypto.utils";
 
 const router = Router({
   /** Creates a new game. */
@@ -17,7 +18,7 @@ const router = Router({
   ).mutation(({ input }) => {
     const hostPlayer = createPlayer(input.playerName);
     const initialGameState = getInitialGameState(hostPlayer);
-    const gameId = "456";
+    const gameId = createGameId();
     setGameState(gameId, initialGameState);
     const token = signAuthToken(hostPlayer.id);
     return { gameId, token };
