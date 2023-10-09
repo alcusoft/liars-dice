@@ -1,6 +1,10 @@
 import { customAlphabet } from "nanoid";
 import { getGameState } from "../stores/game.store";
 
+/**
+ * Create a unique ID for a game.
+ * @returns The game ID.
+ */
 export const createGameId = () => {
   /* Represents a Nano ID alphabet with "unsafe" and "lookalike" characters
      removed. This is inspired by
