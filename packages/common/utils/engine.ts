@@ -175,12 +175,13 @@ export const isGameOver = (gameState: GameState) => {
 };
 
 /**
- * Rolls a specified die
- * @param die The die to roll
+ * Rolls a specified die.
+ * @param die The die to roll.
+ * @returns The rolled die.
  */
 export const rollDie = (die: Die) => {
   const newValue = _.random(1, 6) as Die["value"];
-  die.value = newValue;
+  return { ...die, value: newValue };
 };
 
 /**

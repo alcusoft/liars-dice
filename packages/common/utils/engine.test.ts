@@ -15,8 +15,8 @@ describe("rollDie", () => {
 
     // Roll the die a sufficient number of times to negate randomness
     _.times(1000, () => {
-      rollDie(die);
-      uniqueRolledValues.add(die.value);
+      const rolledDie = rollDie(die);
+      uniqueRolledValues.add(rolledDie.value);
     });
 
     const actual = Array.from(uniqueRolledValues).sort();
