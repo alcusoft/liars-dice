@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { Die, GameConfigPresetMap, GameState } from "../types/game";
+import { Die, GameState } from "../types/game";
 import { applyCallToGameState, isGameOver, rollDie } from "./engine";
 
 describe("rollDie", () => {
@@ -28,7 +28,6 @@ describe("rollDie", () => {
 describe("Basic GameState update operations", () => {
   test("isGameOver check", () => {
     const state: GameState = {
-      gameConfig: GameConfigPresetMap.classic,
       activePlayerId: "a",
       biddingQueue: ["a"],
       gameStatus: "ROUND_OVER",
@@ -44,7 +43,6 @@ describe("Basic GameState update operations", () => {
 
   test("applyCallToGameState: check correct challenge call", () => {
     const currentState: GameState = {
-      gameConfig: GameConfigPresetMap.classic,
       hostPlayerId: "a",
       activePlayerId: "b",
       biddingQueue: ["b", "a"],
@@ -88,7 +86,6 @@ describe("Basic GameState update operations", () => {
 
   test("applyCallToGameState: check incorrect challenge call", () => {
     const currentState: GameState = {
-      gameConfig: GameConfigPresetMap.classic,
       hostPlayerId: "a",
       activePlayerId: "b",
       biddingQueue: ["b", "a"],
@@ -132,7 +129,6 @@ describe("Basic GameState update operations", () => {
 
   test("applyCallToGameState: check correct spot-on call", () => {
     const currentState: GameState = {
-      gameConfig: GameConfigPresetMap.classic,
       hostPlayerId: "a",
       activePlayerId: "b",
       biddingQueue: ["b", "a"],
@@ -175,7 +171,6 @@ describe("Basic GameState update operations", () => {
 
   test("applyCallToGameState: check incorrect spot-on call", () => {
     const currentState: GameState = {
-      gameConfig: GameConfigPresetMap.classic,
       hostPlayerId: "a",
       activePlayerId: "b",
       biddingQueue: ["b", "a"],

@@ -1,6 +1,5 @@
 import _ from "lodash";
 import {
-  GameConfigPresetMap,
   type Bid,
   type Call,
   type Die,
@@ -44,7 +43,6 @@ const getSafeEmoji = () => {
  */
 export const getInitialGameState = (hostPlayer: Player): GameState => {
   return {
-    gameConfig: GameConfigPresetMap.classic,
     gameStatus: "IN_LOBBY",
     hostPlayerId: hostPlayer.id,
     activePlayerId: hostPlayer.id,

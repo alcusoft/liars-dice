@@ -46,7 +46,6 @@ export type GameStatus =
   | "GAME_OVER";
 
 export type GameState = {
-  gameConfig: GameConfig;
   gameStatus: GameStatus;
   hostPlayerId: Player["id"];
   activePlayerId: Player["id"];
@@ -55,6 +54,12 @@ export type GameState = {
   biddingQueue: Player["id"][];
   timerStartTime: number | undefined;
   activeCall: Call | undefined;
+};
+
+export type Game = {
+  id: GameId;
+  config: GameConfig;
+  state: GameState;
 };
 
 export const GameConfigPresetMap = {
