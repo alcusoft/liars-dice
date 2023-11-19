@@ -9,6 +9,35 @@ import {
 } from "../types/game";
 
 /**
+ * Selects a random emoji from a curated list. I don't want to assign a player
+ * the "middle finger" emoji when they join a game.
+ * @returns A safe emoji.
+ */
+const getSafeEmoji = () => {
+  const safeEmojiCodes = [
+    "1f951", // 🥑 avocado
+    "1f346", // 🍆 eggplant
+    "1f954", // 🥔 potato
+    "1f955", // 🥕 carrot
+    "1f33d", // 🌽 ear of corn
+    "1f336", // 🌶 hot pepper
+    "1fad1", // 🫑 bell pepper
+    "1f952", // 🥒 cucumber
+    "1f96c", // 🥬 leafy green
+    "1f966", // 🥦 broccoli
+    "1f9c4", // 🧄 garlic
+    "1f9c5", // 🧅 onion
+    "1f95c", // 🥜 peanuts
+    "1fad8", // 🫘 beans
+    "1f330", // 🌰 chestnut
+    "1fada", // 🫚 ginger root
+  ];
+
+  // `undefined` is only a possible return value for empty arrays
+  return _.sample(safeEmojiCodes) as string;
+};
+
+/**
  * Generates the initial state for a game with a specified host player.
  * @param hostPlayer The host player.
  * @returns The initial game state.
@@ -36,7 +65,7 @@ export const createPlayer = (name: Player["name"]): Player => {
   return {
     id: "123",
     name,
-    emoji: "", // TODO: Set a random emoji
+    emoji: getSafeEmoji(),
     dice: [],
   };
 };
